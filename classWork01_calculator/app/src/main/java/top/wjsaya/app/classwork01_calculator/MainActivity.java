@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
     private Button bu_jia;
     private Button bu_jian;
     private Button bu_qiuzhi;
+    private Button bu_point;
+
+
 
     private String temp = "";
     private String num1="", num2="", sw="";
@@ -58,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
         bu_jia = (Button) findViewById(R.id.bu_jia);
         bu_jian = (Button) findViewById(R.id.bu_jian);
         bu_qiuzhi = (Button) findViewById(R.id.bu_qiuzhi);
+        bu_point = (Button) findViewById(R.id.bu_point);
+
+
 
         bu_clear.setOnClickListener(this);
         bu_1.setOnClickListener(this);
@@ -75,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
         bu_jia.setOnClickListener(this);
         bu_jian.setOnClickListener(this);
         bu_qiuzhi.setOnClickListener(this);
+        bu_point.setOnClickListener(this);
 
     }
 
@@ -128,6 +135,11 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
                 break;
             case R.id.bu_9:
                 temp += "9";
+                test.pushnum(temp);
+                tv_result.setText(temp);
+                break;
+            case R.id.bu_point:
+                temp += ".";
                 test.pushnum(temp);
                 tv_result.setText(temp);
                 break;
