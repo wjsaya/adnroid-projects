@@ -179,15 +179,12 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
                 test.pushnum(temp);
                 tv_result.setText(temp);
                 break;
-
-
             case R.id.bu_square:
-                //平方
-                test.setsw("&");
-                temp = test.getResult();
+                //N方
+                test.setsw("^");
+                temp += "^";
+                test.pushnum(temp);
                 tv_result.setText(temp);
-                temp = "";
-                test.init();
                 break;
 
             case R.id.bu_sqrt:
@@ -271,8 +268,8 @@ class caculator {
             case "/":
                 re = this.num1 / this.num2;
                 break;
-            case "&":
-                re = this.num1 * this.num1;
+            case "^":
+                re = Math.pow(this.num1, this.num2);
                 break;
             case "|":
                 re = Math.sqrt(this.num1);

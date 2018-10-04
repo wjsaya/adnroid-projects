@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:background="@drawable/buoper_style"
             android:textColor="@color/colorPrimary"
-            android:text="X^2"
+            android:text="X^N"
             android:textSize="50px" />
         <Button
             android:id="@+id/bu_sqrt"
