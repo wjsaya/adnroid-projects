@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="结果："
-            android:textSize="50px" />
+            android:textSize="60px" />
     </LinearLayout>
 
 
@@ -242,7 +242,7 @@
                 android:id="@+id/bu_qiuzhi"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bu_style"
+                android:background="@drawable/buresult_style"
                 android:textColor="@color/bu_white"
                 android:text="="
                 android:textSize="50px" />
