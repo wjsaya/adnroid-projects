@@ -2,6 +2,7 @@ package top.wjsaya.app.classwork01_calculator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
     private Button bu_jian;
     private Button bu_qiuzhi;
     private Button bu_point;
-
+    private Button bu_square;
+    private Button bu_sqrt;
 
 
     private String temp = "";
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
         bu_jian = (Button) findViewById(R.id.bu_jian);
         bu_qiuzhi = (Button) findViewById(R.id.bu_qiuzhi);
         bu_point = (Button) findViewById(R.id.bu_point);
+        bu_square = (Button) findViewById(R.id.bu_square);
+        bu_sqrt = (Button) findViewById(R.id.bu_sqrt);
 
 
 
@@ -82,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
         bu_jian.setOnClickListener(this);
         bu_qiuzhi.setOnClickListener(this);
         bu_point.setOnClickListener(this);
+        bu_square.setOnClickListener(this);
+        bu_sqrt.setOnClickListener(this);
 
     }
 
@@ -139,6 +145,12 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
                 tv_result.setText(temp);
                 break;
             case R.id.bu_point:
+                if(TextUtils.isEmpty(temp)) {
+                    temp += "0.";
+                    test.pushnum(temp);
+                    tv_result.setText(temp);
+                    break;
+                }
                 temp += ".";
                 test.pushnum(temp);
                 tv_result.setText(temp);
@@ -167,9 +179,30 @@ public class MainActivity extends AppCompatActivity implements TextView.OnClickL
                 test.pushnum(temp);
                 tv_result.setText(temp);
                 break;
+
+
+            case R.id.bu_square:
+                //平方
+                test.setsw("&");
+                temp = test.getResult();
+                tv_result.setText(temp);
+                temp = "";
+                test.init();
+                break;
+
+            case R.id.bu_sqrt:
+                //开方
+                test.setsw("|");
+                temp = test.getResult();
+                tv_result.setText(temp);
+                temp = "";
+                test.init();
+
+                break;
             case R.id.bu_qiuzhi:
                 temp = test.getResult();
                 tv_result.setText(temp);
+                temp = "";
                 test.init();
                 break;
             case R.id.bu_clear:
@@ -196,18 +229,27 @@ class caculator {
 
     public void pushnum(String in) {
         try {
+            //直接取double值，取到了则代表输入为空，正在输入被加数。
             this.num1 = Double.valueOf(in);
+            Log.d("pushnum直接取num1为：\t", String.valueOf(this.num1));
         } catch (Exception e) {
-            this.num1 = Double.valueOf(in.split("\\" + sw)[0]);
+            //出错？那么应该是有+-*/之一，那么用sw分隔。
             try {
+                this.num1 = Double.valueOf(in.split("\\" + sw)[0]);
                 this.num2 = Double.valueOf(in.split("\\" + sw)[1]);
+                Log.d("pushnum取到num1为：\t", String.valueOf(this.num1));
+                Log.d("pushnum取到num2为：\t", String.valueOf(this.num2));
             }
             catch (Exception f) {
+                this.num1 = 0;
                 this.num2 = 0;
             }
         }
     }
 
+    public Double getnum2() {
+        return this.num2;
+    }
 
     public void setsw(String in) {
         this.sw = in;
@@ -228,6 +270,12 @@ class caculator {
                 break;
             case "/":
                 re = this.num1 / this.num2;
+                break;
+            case "&":
+                re = this.num1 * this.num1;
+                break;
+            case "|":
+                re = Math.sqrt(this.num1);
                 break;
         }
         return String.valueOf(re);
