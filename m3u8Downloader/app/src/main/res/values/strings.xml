@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">m3u8下载器</string>
+    <string name="wjsaya">我是wjsaya</string>
+    <string name="mainATname">主Activity</string>
+    <string name="listATname">列表Activity</string>
+    <string name="goListView">切换到列表activity</string>
+    <string name="goMainView">切换到主activity</string>
+</resources>
