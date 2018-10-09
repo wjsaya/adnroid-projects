@@ -25,7 +25,8 @@ projects Name|projects Description|Download URL|Status
 --|--|--|--
 [helloworld](./helloworld)|...simply hello world|[helloworld](./app_release/helloworld.apk)|Done
 [userCheck](./userCheck)|learn hwo to use button and how to bind button to a method|[userCheck](./app_release/userCheck.apk)|Done
-[caculator](./classWork01_calculator)|A simple calculator, you can carry out  Elementary arithmetic, modulo, N power|[caculator](./app_release/classWork01_calculator.apk)
+[caculator](./calculator)|A simple calculator, you can carry out  Elementary arithmetic, modulo, N power|[caculator](./app_release/calculator.apk)
+[Intent_switch](./Intent_switch)|click button to change activity|[Intent_switch](./app_release/Intent_switch.apk)|Done
 
 
 

@@ -26,7 +26,7 @@
 --|--|--|--
 [helloworld](./helloworld)|。。。不解释|[helloworld](./app_release/helloworld.apk)|Done
 [userCheck](./userCheck)|button测试|[userCheck](./app_release/userCheck.apk)|Done
-[计算器](./classWork01_calculator)|一个简单计算器，可以进行简单的四则运算以及取模，求N次方等操作。|[计算器](./app_release/classWork01_calculator.apk)|Done
-
+[计算器](./calculator)|一个简单计算器，可以进行简单的四则运算以及取模，求N次方等操作。|[计算器](./app_release/calculator.apk)|Done
+[Intent_switch](./Intent_switch)|button切换activity|[Intent_switch](./app_release/Intent_switch.apk)|Done
 
 
