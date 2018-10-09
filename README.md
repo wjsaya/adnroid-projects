@@ -11,7 +11,7 @@ projects Name|projects Description|Download URL|Status
 [m3u8Downloader](./m3u8Downloader)|m38u Downloader,download and combine it to a full video|[m3u8Downloader](./app_release/m3u8Downloader.apk)|TODO
 
 
-# 学习用
+# For study 
 projects Name|projects Description|Download URL|Status
 --|--|--|--
 [layoutStudy](./layoutStudy)|Used to learn android layout|[layoutStudy](./app_release/layoutStudy.apk)|TODO
