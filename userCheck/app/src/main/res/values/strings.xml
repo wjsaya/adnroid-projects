@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">userCheck</string>
+    <string name="hintUsername">请输入用户名：</string>
+    <string name="hintPassword">请输入密码：</string>
+    <string name="hintSubbmit">提交</string>
+    <string name="hint">正确用户名是：\twjsaya\n正确密码是\t\t\t123456"</string>
+
+</resources>
