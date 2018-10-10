@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="SingleVideoBar">
+        <attr name="videoname" format="string" />
+        <attr name="videoImg" format="reference" />
+        <attr name="videoSize" format="string" />
+    </declare-styleable>
+</resources>

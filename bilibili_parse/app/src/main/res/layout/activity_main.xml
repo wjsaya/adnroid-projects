@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bili="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
+    <top.wjsaya.app.bilibili_parse.SingleVideoBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        bili:videoname="名字？不存在的"
+        bili:videoSize="233.333G"
+        bili:videoImg="@drawable/ic_launcher_foreground">
+    </top.wjsaya.app.bilibili_parse.SingleVideoBar>
+
+
+<!--
     <LinearLayout
         android:layout_weight="1"
         android:orientation="vertical"
@@ -49,6 +60,6 @@
             android:id="@+id/tv_content"/>
 
     </LinearLayout>
-
+    -->
 </LinearLayout>
 

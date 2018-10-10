@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/titleLayout"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/avImg"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_launcher_foreground"
+        />
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:textAlignment="center" >
+
+        <LinearLayout
+            android:id="@+id/descLayout"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/avName"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="@string/avName"
+                android:textSize="20px"
+                />
+            <TextView
+                android:id="@+id/avSize"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="@string/avSize"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1" >
+            <Button
+                android:id="@+id/avCombine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/avCombine"
+                />
+
+            <TextView
+                android:id="@+id/avDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/avDetails"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

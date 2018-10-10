@@ -22,22 +22,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        setContentView(R.layout.sample_single_video_bar);
+        /*
         tv_top = (TextView) findViewById(R.id.tv_top);
         tv_content = (TextView) findViewById(R.id.tv_content);
         et_avid = (EditText) findViewById(R.id.et_avid);
         init();
+        */
     }
 
     public void init() {
         String ExtRootDir = Environment.getExternalStorageDirectory().toString();
         this.AllDirs = new File(ExtRootDir + "/Android/data/tv.danmaku.bili/download/").listFiles();
-
         String temp = "";
         for (File file : this.AllDirs) {
             temp += file.getName().toString() + "\n";
         }
         tv_top.setText(temp);
-
     }
     /**
      * 获取bilibili下载目录下的文件信息。
@@ -54,6 +55,5 @@ public class MainActivity extends AppCompatActivity {
         String temp = parse.parseVideos();
 //        tv_content.setText(parse.type_tag);
         tv_content.setText(temp);
-
     }
 }

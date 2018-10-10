@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">bilibili视频合并</string>
+    <string name="avCombine">合并</string>
+    <string name="avDetails">详情 ></string>
+    <string name="avName">名字名字名字名字</string>
+    <string name="avImg">图片</string>
+    <string name="avSize">5.21312mb</string>
 </resources>
