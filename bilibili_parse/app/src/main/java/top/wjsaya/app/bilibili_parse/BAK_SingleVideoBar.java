@@ -2,13 +2,9 @@ package top.wjsaya.app.bilibili_parse;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Dimension;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,10 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class SingleVideoBar extends LinearLayout {
+public class BAK_SingleVideoBar extends LinearLayout {
     /**
      * 声明控件
      */
+    private Button btnCombine;//合并BU
     private ImageView imgAV;//视频封面图片IV
     private TextView tvTitle, tvSize, tvDetails;//视频标题TV, 视频大小TV，视频详情TV
 
@@ -28,16 +25,16 @@ public class SingleVideoBar extends LinearLayout {
      */
     //声明左按钮的属性
     private String textTitle;           //标题文本
-    private String textSize;            //av视频大小文本
+    private String textSize;            //大小文本
     private String textDetails;         //详情文本
     private Drawable videoImg;          //图片来源
-    private int avid = 0;               //av号
     private float widgetHeight;     //控件高度
     private float titleTextSize;    //标题文本大小
 
     /**
      * 创建Linerlayout
      */
+    private LinearLayout buttonLayout;
     private LinearLayout descLayout;
     private LinearLayout contentLayout;
     private LinearLayout titleLayouts;
@@ -47,6 +44,7 @@ public class SingleVideoBar extends LinearLayout {
      */
     public interface SingleVideoBarOnClickListener {
         public void videoViewOnClick();         //单个视图被点击
+        public void btnCombineOnClick();        //合并按钮被点击
         public void tvDetailsOnClick();         //详情被点击
     }
 
@@ -65,20 +63,24 @@ public class SingleVideoBar extends LinearLayout {
     /**
      * 重写构造方法
      */
-    public SingleVideoBar(Context context, AttributeSet attr) {
+
+    public BAK_SingleVideoBar(Context context, AttributeSet attr) {
         //super(context, attr);
         this(context);
     }
 
 
+    public BAK_SingleVideoBar(Context context) {
+        super(context);
+        /*
     public SingleVideoBar(Context context) {
         super(context);
+        */
         /**
          * 用TypedArray可以获取用户在xml中声明的此控件的所有属性,以键值对存储,
          * K:资源文件(例 R.styleable.topBar_leftText)
          * V:属性值
          */
-
         TypedArray taThis = context.obtainStyledAttributes(R.styleable.SingleVideoBar);
 
         //为左按钮的属性赋值
@@ -91,60 +93,68 @@ public class SingleVideoBar extends LinearLayout {
         taThis.recycle();
 
         //实例化所有控件
+        btnCombine = new Button(context);
         tvTitle = new TextView(context);
         tvSize = new TextView(context);
         tvDetails = new TextView(context);
         imgAV = new ImageView(context);
 
-
-        //设置控件默认属性
+        //设置控件属性
+        btnCombine.setText("合并");
         tvTitle.setText(textTitle);
         tvTitle.setTextSize(titleTextSize);
-        tvTitle.setMaxLines(3);
+        tvTitle.setMaxLines(2);
         tvTitle.setEllipsize(TextUtils.TruncateAt.END);
-
         tvSize.setText(textSize);
         tvDetails.setText("详情  >");
-        tvDetails.setGravity(Gravity.RIGHT);        //设置详情在layout里靠右
-
         imgAV.setImageDrawable(videoImg);
-    }
 
-        public void initLayout(Context context) {
-        imgAV.setId(this.avid);
-            imgAV.setTag(this.avid);
+        //实例化最右边的两个按钮(btnLayoutParams)的布局属性
+        buttonLayout = new LinearLayout(context);
+        buttonLayout.setOrientation(LinearLayout.VERTICAL);
+        //将两个按钮添加到本自定义控件中
+        buttonLayout.addView(btnCombine, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
+        buttonLayout.addView(tvDetails, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
+//        addView(buttonLayout);
 
         //实例化descLayout的布局属性
-        descLayout =  new LinearLayout(context);
-        descLayout.setOrientation(LinearLayout.HORIZONTAL);
-        descLayout.addView(tvSize, new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        descLayout.addView(tvDetails, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,1));
-//        addView(descLayout, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        descLayout = new LinearLayout(context);
+        descLayout.setOrientation(LinearLayout.VERTICAL);
+        descLayout.addView(tvTitle, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 3 ));
+        descLayout.addView(tvSize, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+//        addView(descLayout);
 
         //实例化contentLayout的布局属性
         contentLayout = new LinearLayout(context);
-        contentLayout.setOrientation(LinearLayout.VERTICAL);
-        contentLayout.addView(tvTitle, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 3 ));
-        contentLayout.addView(descLayout, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+        contentLayout.setOrientation(LinearLayout.HORIZONTAL);
+        contentLayout.addView(descLayout, new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 4));
+        contentLayout.addView(buttonLayout, new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
 //        addView(contentLayout);
 
         //实例化titleLayouts的布局属性
         titleLayouts = new LinearLayout(context);
         titleLayouts.setOrientation(LinearLayout.HORIZONTAL);
-        titleLayouts.addView(imgAV, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        titleLayouts.addView(contentLayout, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 2));
+        titleLayouts.addView(imgAV, new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+        titleLayouts.addView(contentLayout, new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 3));
+        addView(titleLayouts, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 250, 3));
 
-        addView(titleLayouts, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)widgetHeight));
 
+        //回调左按钮的监听事件
+        btnCombine.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.btnCombineOnClick();
+            }
+        });
 
-        //回调 详情 的监听事件
+        //回调右按钮的监听事件
         tvDetails.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.tvDetailsOnClick();
             }
         });
-        // 回调 卡片 的监听事件
+
         titleLayouts.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,42 +163,26 @@ public class SingleVideoBar extends LinearLayout {
         });
     }
 
-    /**
-     * 设置单个widget的title
-     * @param in    title字符串
-     * @param FontSize  卡片中的av视频占用空间大小
-     */
     public void setTextTitle(String in, int FontSize) {
         tvTitle.setText(in);
-        this.tvTitle.setTextSize(FontSize);
+        tvTitle.setTextSize(FontSize);
     }
 
-    public void setTextDetails(String in, int FontSize) {
-        this.tvDetails.setText(in);
-        this.tvDetails.setTextSize(FontSize);
-    }
-    public void setTextTvSize(String in, int FontSize) {
-        tvSize.setText(in + "  ");
-        tvSize.setTextSize(FontSize);
+    public void setTextTvSize(String in) {
+        tvSize.setText(in);
     }
 
-    public void setWidgetHeight(int inHeight) {
-        widgetHeight = inHeight;
+    public void setTextBtnCombine(String in) {
+        btnCombine.setText(in);
     }
-
-    public void setImgAV(Bitmap in) {
-        imgAV.setImageBitmap(in);
-    }
-
-    public void setavId(int in) {
-        this.avid = in;
-    }
-    /*
+/*
     public void setDrableImg(String in) {
         Drawable temp;
         TypedArray taThis = MainActivity.obtainStyledAttributes(R.styleable.SingleVideoBar);
+
         videoImg = taThis.getDrawable(in);
+
         imgAV.setImageDrawable(in);
     }
-    */
+*/
 }

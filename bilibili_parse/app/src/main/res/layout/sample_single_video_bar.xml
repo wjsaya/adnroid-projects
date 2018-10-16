@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/titleLayout"
     android:background="#ffffff"
     android:layout_width="match_parent"
@@ -16,58 +17,41 @@
 
     <LinearLayout
         android:id="@+id/contentLayout"
-        android:layout_weight="3"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:textAlignment="center" >
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:textAlignment="center">
+
+        <TextView
+            android:id="@+id/avName"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:text="@string/avName"
+            android:textSize="20dp" />
 
         <LinearLayout
             android:id="@+id/descLayout"
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/avName"
-                android:layout_weight="3"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:text="@string/avName"
-                android:textSize="20px"
-                />
             <TextView
                 android:id="@+id/avSize"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:text="@string/avSize"
-                />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/buttonLayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1" >
-            <Button
-                android:id="@+id/avCombine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/avCombine"
-                />
+                android:text="@string/avSize" />
 
             <TextView
                 android:id="@+id/avDetails"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/avDetails"
-                />
+                android:layout_height="match_parent"
+                android:text="@string/avDetails" />
         </LinearLayout>
+
 
     </LinearLayout>
 

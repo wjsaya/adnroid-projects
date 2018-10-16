@@ -3,5 +3,7 @@
         <attr name="videoname" format="string" />
         <attr name="videoImg" format="reference" />
         <attr name="videoSize" format="string" />
+        <attr name="widgetHeight" format="dimension" />
+        <attr name="titleTextSize" format="dimension" />
     </declare-styleable>
 </resources>

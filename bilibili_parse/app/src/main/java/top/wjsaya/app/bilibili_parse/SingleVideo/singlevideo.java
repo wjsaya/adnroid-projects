@@ -73,9 +73,9 @@ public class singlevideo {
         File[] files = new File(path.toString() + this.type_tag).listFiles();
         String re = "";
         for(File file : files) {
-            Log.d("single:", file.toString());
+//            Log.d("single:", file.toString());
             if (file.toString().contains(".blv")) {
-                Log.d("singleXXXXXX:", file.toString());
+//                Log.d("singleXXXXXX:", file.toString());
                 re += file.toString();
             }
         }
@@ -92,7 +92,7 @@ public class singlevideo {
     }
     public void parseJsonfile(File path) {
         File file = new File(path.toString() + "/entry.json");
-        Log.e("parseJsonfile path", file.getAbsolutePath().toString());
+//        Log.e("parseJsonfile path", file.getAbsolutePath().toString());
 
         try {
             FileInputStream fis = new FileInputStream(file);
@@ -109,11 +109,11 @@ public class singlevideo {
 //                this.downloaded_bytes += Formatter.formatFileSize(MainActivity.this, Long.valueOf(jso.getString("downloaded_bytes")));
                 long temp = Long.valueOf(jso.getString("downloaded_bytes")) + Long.valueOf(this.downloaded_bytes);
                 this.downloaded_bytes = String.valueOf(temp);
-                Log.e("downloaded_bytes", downloaded_bytes);
+//                Log.e("downloaded_bytes", downloaded_bytes);
 //                this.total_bytes += Formatter.formatFileSize(MainActivity.this, Long.valueOf(jso.getString("total_bytes")));
                 temp = Long.valueOf(jso.getString("total_bytes")) + Long.valueOf(this.total_bytes);
                 this.total_bytes = String.valueOf(temp);
-                Log.e("total_bytes", total_bytes);
+//                Log.e("total_bytes", total_bytes);
 //                this.total_bytes += jso.getString("total_bytes");
 
                 //String re = avid + title + is_completed + downloaded_bytes + total_bytes + type_tag + cover;
@@ -131,7 +131,19 @@ public class singlevideo {
         }
     }
 
-    public Map<String, String> getInfo() {
+    public String[] getInfo() {
+        String[] re = {
+                this.title,
+                this.total_bytes
+        };
+//        Log.wtf("getINfo内部title", re[0].toString());
+//        Log.wtf("getINfo内部total_bytes", re[1].toString());
+        return re;
+
+
+    }
+
+    public Map<String, String> getInfoMAP() {
         Map<String, String> remap = new HashMap<String, String>();
         remap.put("avid", this.avid);
         remap.put("title", this.title);
@@ -142,7 +154,7 @@ public class singlevideo {
         remap.put("type_tag", this.type_tag);
         remap.put("avFilePath", this.avFilePath.getAbsolutePath().toString());
 
-        Log.wtf("getINfo内部", remap.get("avid"));
+//        Log.wtf("getINfo内部", remap.get("avid"));
         return remap;
 
 
