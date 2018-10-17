@@ -7,25 +7,77 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/et_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="输入地址"
-        android:text="http://jsp.wjsaya.top/project2/pic/top.jpg"
-        android:inputType="text" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/et_url1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="输入地址"
+                android:text="http://jsp.wjsaya.top/project2/pic/top.jpg"
+                android:inputType="text" />
 
-    <Button
-        android:id="@+id/bu_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="显示"/>
+            <Button
+                android:id="@+id/bu_submit1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="显示"/>
 
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+            <ImageView
+                android:id="@+id/iv_img1"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"   />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/et_url2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="输入地址"
+                android:text="http://jsp.wjsaya.top/project2/pic/top.jpg"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/bu_submit2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="显示"/>
+
+            <ImageView
+                android:id="@+id/iv_img2"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"   />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/et_url3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="输入地址"
+                android:text="http://jsp.wjsaya.top/project2/pic/top.jpg"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/bu_submit3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="显示"/>
+
+            <ImageView
+                android:id="@+id/iv_img3"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"   />
+        </LinearLayout>
 
 </LinearLayout>
 

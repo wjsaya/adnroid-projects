@@ -3,6 +3,7 @@ package top.wjsaya.app.bilibili_parse;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Dimension;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -46,6 +47,7 @@ public class SingleVideoBar extends LinearLayout {
      * 创建一个监听点击的接口
      */
     public interface SingleVideoBarOnClickListener {
+        public void imgOnClick();               //图片被点击
         public void videoViewOnClick();         //单个视图被点击
         public void tvDetailsOnClick();         //详情被点击
     }
@@ -112,7 +114,7 @@ public class SingleVideoBar extends LinearLayout {
 
         public void initLayout(Context context) {
         imgAV.setId(this.avid);
-            imgAV.setTag(this.avid);
+        imgAV.setMaxWidth(100);
 
         //实例化descLayout的布局属性
         descLayout =  new LinearLayout(context);
@@ -124,6 +126,7 @@ public class SingleVideoBar extends LinearLayout {
         //实例化contentLayout的布局属性
         contentLayout = new LinearLayout(context);
         contentLayout.setOrientation(LinearLayout.VERTICAL);
+//        contentLayout.setBackgroundColor(Color.YELLOW);
         contentLayout.addView(tvTitle, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 3 ));
         contentLayout.addView(descLayout, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
 //        addView(contentLayout);
@@ -131,9 +134,9 @@ public class SingleVideoBar extends LinearLayout {
         //实例化titleLayouts的布局属性
         titleLayouts = new LinearLayout(context);
         titleLayouts.setOrientation(LinearLayout.HORIZONTAL);
+        titleLayouts.setPadding(10, 5, 10, 5);
         titleLayouts.addView(imgAV, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        titleLayouts.addView(contentLayout, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 2));
-
+        titleLayouts.addView(contentLayout, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
         addView(titleLayouts, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)widgetHeight));
 
 
@@ -151,6 +154,13 @@ public class SingleVideoBar extends LinearLayout {
                 listener.videoViewOnClick();
             }
         });
+        // 回调 卡片 的监听事件
+            imgAV.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.imgOnClick();
+                }
+            });
     }
 
     /**
@@ -183,12 +193,4 @@ public class SingleVideoBar extends LinearLayout {
     public void setavId(int in) {
         this.avid = in;
     }
-    /*
-    public void setDrableImg(String in) {
-        Drawable temp;
-        TypedArray taThis = MainActivity.obtainStyledAttributes(R.styleable.SingleVideoBar);
-        videoImg = taThis.getDrawable(in);
-        imgAV.setImageDrawable(in);
-    }
-    */
 }

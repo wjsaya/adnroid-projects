@@ -81,17 +81,17 @@ public class singlevideo {
         }
         return re;
     }
-
+/*
     public void parseJson(File path) {
         File[] files = path.listFiles();
         //   + "/entry.json");
         for(File file : files) {
             parseJsonfile(file);
         }
-
     }
-    public void parseJsonfile(File path) {
-        File file = new File(path.toString() + "/entry.json");
+    */
+    public void parseJson(File path) {
+        File file = new File(path.toString() + "/1/entry.json");
 //        Log.e("parseJsonfile path", file.getAbsolutePath().toString());
 
         try {
@@ -101,11 +101,12 @@ public class singlevideo {
             String in = bis.readLine();
             try {
                 JSONObject jso = new JSONObject(in);
-                this.title += jso.getString("title");
-                this.type_tag += jso.getString("type_tag");
-                this.cover += jso.getString("cover");
-                this.avid += jso.getString("avid");
-                this.is_completed += jso.getString("is_completed");
+                this.title = jso.getString("title");
+                this.type_tag = jso.getString("type_tag");
+                this.cover = jso.getString("cover");
+//                Log.e("调试", "封面路径"+this.cover);
+                this.avid = jso.getString("avid");
+                this.is_completed = jso.getString("is_completed");
 //                this.downloaded_bytes += Formatter.formatFileSize(MainActivity.this, Long.valueOf(jso.getString("downloaded_bytes")));
                 long temp = Long.valueOf(jso.getString("downloaded_bytes")) + Long.valueOf(this.downloaded_bytes);
                 this.downloaded_bytes = String.valueOf(temp);
