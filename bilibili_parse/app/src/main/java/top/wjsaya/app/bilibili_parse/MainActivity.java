@@ -25,9 +25,11 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 import top.wjsaya.app.bilibili_parse.SingleVideo.singlevideo;
@@ -76,11 +79,7 @@ public class MainActivity extends AppCompatActivity {
             if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, REQUEST_CODE);
                 // return;
-            } else {
-//                init();
             }
-        } else {
-//            init();
         }
     }
 
@@ -128,17 +127,20 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        mainScrollList = new ScrollView(this);
         mainLayout = new LinearLayout(this);
         mainLayout.setOrientation(LinearLayout.VERTICAL);
-//        mainLayout.setBackgroundColor(Color.GRAY);
+        //        mainLayout.setBackgroundColor(Color.GRAY);
+
 
         for (File file : this.AllDirs) {
             addAvWidgets(mainLayout, file);
             addSlash(mainLayout);
         }
+
+        mainScrollList = new ScrollView(this);
         mainScrollList.addView(mainLayout);
         setContentView(mainScrollList);
+
     }
 
     public void addSlash(LinearLayout mainLayout) {
@@ -192,11 +194,11 @@ public class MainActivity extends AppCompatActivity {
         alertMessage += "av号：" + remap.get("avid");
 //        alertMessage += "\n视频标题：" + remap.get("title");
 //        alertMessage += "\n已下载完成？" + remap.get("is_completed");
-        alertMessage += "\n已下载：" + Formatter.formatFileSize(this, Long.valueOf(remap.get("downloaded_bytes")));
-        alertMessage += "\n总大小：" + Formatter.formatFileSize(this, Long.valueOf(remap.get("total_bytes")));
-        alertMessage += "\n视频编码：" + remap.get("type_tag");
-        alertMessage += "\n本地缓存路径：" + remap.get("avFilePath");
-        alertMessage += "\n封面地址：" + remap.get("cover");
+        alertMessage += "\n\n已下载：" + Formatter.formatFileSize(this, Long.valueOf(remap.get("downloaded_bytes")));
+        alertMessage += "\n\n总大小：" + Formatter.formatFileSize(this, Long.valueOf(remap.get("total_bytes")));
+        alertMessage += "\n\n视频编码：" + remap.get("type_tag");
+        alertMessage += "\n\n本地缓存路径：" + remap.get("avFilePath");
+        alertMessage += "\n\n封面地址：" + remap.get("cover");
 
 
         infoDialog.setMessage(alertMessage);

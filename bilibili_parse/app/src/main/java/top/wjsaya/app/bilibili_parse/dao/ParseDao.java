@@ -24,9 +24,9 @@ public class ParseDao {
         Log.e("调试", "dao存入：" + String.valueOf(imgurl));
         ContentValues initValues = new ContentValues();
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        avImg.compress(Bitmap.CompressFormat.JPEG, 5, os);
+        avImg.compress(Bitmap.CompressFormat.JPEG, 50, os);
         initValues.put("avid", avid);//av号
-        initValues.put("imgurl", imgurl);//图片地址
+        initValues.put("imgurl", imgurl);//图片地址?
         initValues.put("imgSize", imgSize);//图片大小
         initValues.put("imgbinary", os.toByteArray());//图片二进制
 
@@ -94,8 +94,11 @@ public class ParseDao {
                 //            Log.e("调试", String.valueOf(avid) + "\tcursor.moveToFirst()成立");
                 byte[] in;
                 in = cursor.getBlob(0);
+
+                BitmapFactory.Options opts = new BitmapFactory.Options();
+                opts.inSampleSize = 4;  //宽缩到1/4，高缩到1/4，整体缩放为原来1/16
                 cursor.close();
-                return BitmapFactory.decodeByteArray(in, 0, in.length);
+                return BitmapFactory.decodeByteArray(in, 0, in.length, opts);
             }
         }catch (OutOfMemoryError e) {
             Log.e("OutOfMemoryError", "内存爆了");
