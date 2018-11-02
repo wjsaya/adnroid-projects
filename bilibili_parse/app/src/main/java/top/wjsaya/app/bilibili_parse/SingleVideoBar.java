@@ -17,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 完全自定义的linerlayout控件组合。
+ * 布局效果见sample_single_video_bar.xml
+ */
 public class SingleVideoBar extends LinearLayout {
     /**
      * 声明控件

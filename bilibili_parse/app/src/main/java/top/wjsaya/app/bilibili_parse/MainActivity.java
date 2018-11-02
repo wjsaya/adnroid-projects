@@ -2,47 +2,31 @@ package top.wjsaya.app.bilibili_parse;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.text.format.Formatter;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
-import top.wjsaya.app.bilibili_parse.SingleVideo.singlevideo;
 import top.wjsaya.app.bilibili_parse.dao.ParseDao;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,11 +35,12 @@ public class MainActivity extends AppCompatActivity {
     final private int CHANGE_PIC_FAIL = 2;
     private TextView tv_top, tv_content;
     private EditText et_avid;
+    private ListView lv_main;
     private LinearLayout mainLayout;
     private ScrollView mainScrollList;
 
-    private int screenWidth;
-    private int screenHeight;
+    private LayoutInflater mLayoutInflater;
+
 
     private static final int REQUEST_CODE = 0; // 请求码
     static final String[] PERMISSIONS = new String[]{
@@ -88,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-
-
             Bundle bundleData = msg.getData();
             int reavid = Integer.valueOf(bundleData.getString("avid", "233333"));
             ImageView iv_now = findViewById(reavid);
@@ -109,137 +92,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.sample_single_video_bar);
-        init();
-    }
-
-
-    public void init() {
-        String ExtRootDir = Environment.getExternalStorageDirectory().toString();
-        Log.e("init()", "init()被调用， 开始初始化首页的ScrollView");
-        File bilibili = new File(ExtRootDir + "/Android/data/tv.danmaku.bili/download/");
-        this.AllDirs = bilibili.listFiles();
-
-        try {
-            File temp = this.AllDirs[0];
-        } catch (Exception e) {
-            Toast.makeText(this, "bilibili下载目录为空?", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        mainLayout = new LinearLayout(this);
-        mainLayout.setOrientation(LinearLayout.VERTICAL);
-        //        mainLayout.setBackgroundColor(Color.GRAY);
-
-
-        for (File file : this.AllDirs) {
-            addAvWidgets(mainLayout, file);
-            addSlash(mainLayout);
-        }
-
-        mainScrollList = new ScrollView(this);
-        mainScrollList.addView(mainLayout);
-        setContentView(mainScrollList);
-
-    }
-
-    public void addSlash(LinearLayout mainLayout) {
-        LinearLayout slash = new LinearLayout(this);
-        slash.setBackgroundColor(Color.GRAY);            //TODO 暂时用空白layout分隔
-        mainLayout.addView(slash, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 20));
-    }
-
-    public void addAvWidgets(LinearLayout mainLayout, File file) {
-        singlevideo temp = new singlevideo(file.getName().toString().trim());
-        final Map<String, String> remap = temp.getInfoMAP();
-        //        Log.wtf("返回数组", remap.get("avid"));
-        //        Log.wtf("返回数组", remap.get("title"));
-        //        Log.wtf("返回数组", remap.get("cover"));
-        //        Log.wtf("返回数组", remap.get("is_completed"));
-        //        Log.wtf("返回数组", remap.get("downloaded_bytes"));
-        //        Log.wtf("返回数组", remap.get("total_bytes"));
-        //        Log.wtf("返回数组", remap.get("type_tag"));
-        //        Log.wtf("返回数组", remap.get("avFilePath"));
-        //
-
-        //        Point screenSize = new Point();
-        //        MainActivity.this.getWindowManager().getDefaultDisplay().getSize(screenSize);
-        //        int screenWidth = screenSize.x;
-        //        int screenHeight = screenSize.y;
-        //        int titleTextSize = (screenWidth / 720) * 12;
-        //
-        //        Log.e("screenWidth", String.valueOf(screenWidth));
-        //        Log.e("screenWidth/12", String.valueOf(screenWidth/12));
-        //        Log.e("字体大小", String.valueOf(titleTextSize));
-
-        SingleVideoBar tempBar;
-        tempBar = new SingleVideoBar(this);
-        tempBar.setWidgetHeight(200);
-
-        try {
-            tempBar.setavId(Integer.valueOf(remap.get("avid")));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-        tempBar.setTextTitle(remap.get("title"), 20);              //设置标题
-        tempBar.setTextDetails("详情 >", 20);          //设置详情按钮文字
-        tempBar.setTextTvSize(Formatter.formatFileSize(this, Long.valueOf(remap.get("total_bytes"))), 20);            //设置av大小的文字
-        tempBar.initLayout(this);
-
-        final AlertDialog.Builder infoDialog = new AlertDialog.Builder(this);  //先得到构造器
-        infoDialog.setTitle(remap.get("title"));
-
-        String alertMessage = "";
-        alertMessage += "av号：" + remap.get("avid");
-//        alertMessage += "\n视频标题：" + remap.get("title");
-//        alertMessage += "\n已下载完成？" + remap.get("is_completed");
-        alertMessage += "\n\n已下载：" + Formatter.formatFileSize(this, Long.valueOf(remap.get("downloaded_bytes")));
-        alertMessage += "\n\n总大小：" + Formatter.formatFileSize(this, Long.valueOf(remap.get("total_bytes")));
-        alertMessage += "\n\n视频编码：" + remap.get("type_tag");
-        alertMessage += "\n\n本地缓存路径：" + remap.get("avFilePath");
-        alertMessage += "\n\n封面地址：" + remap.get("cover");
-
-
-        infoDialog.setMessage(alertMessage);
-        infoDialog.setIcon(R.mipmap.ic_launcher);//设置图标，图片id即可
-        infoDialog.setNeutralButton("复制封面地址", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ClipboardManager clip = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("封面地址",remap.get("cover"));
-                clip.setPrimaryClip(clipData);
-                Toast.makeText(MainActivity.this, "封面地址已复制，去下载吧~", Toast.LENGTH_SHORT).show();
-            }
-        });
-        infoDialog.setPositiveButton("确认", new DialogInterface.OnClickListener() { //设置确定按钮
-            @Override
-            public void onClick(DialogInterface dialog, int which) { dialog.dismiss(); //关闭dialog
-            }
-        });
-
-        tempBar.setSingleVideoBarOnClickListener(new SingleVideoBar.SingleVideoBarOnClickListener() {
-            @Override
-            public void imgOnClick() {//TODO 点击后，弹出一个新窗口展示大图，一个button用来保存
-                Toast.makeText(MainActivity.this, "未完成，弹出一个新窗口展示大图，一个button用来保存。", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, PicturePreviewActivity.class);
-                intent.putExtra("imgUrl", remap.get("cover"));
-                startActivity(intent);
-            }
-
-            @Override
-            public void videoViewOnClick() {// 点击后，弹出一个Dialog，显示对应视频的详细信息
-                infoDialog.show();
-            }
-
-            @Override
-            public void tvDetailsOnClick() {//TODO 点击后，跳转到新的activity，用来展示分p信息
-                Toast.makeText(MainActivity.this, "点击后，跳转到新的activity，用来展示分p信息", Toast.LENGTH_SHORT).show();
-            }
-        });
-        mainLayout.addView(tempBar);
-        new Thread(new initImg(remap.get("avid"), remap.get("cover"))).start();
+        setContentView(R.layout.activity_main);
+        lv_main = findViewById(R.id.lv_main);
+        lv_main.setAdapter(new SingleVideoBarAdapter(MainActivity.this));
     }
 
     class initImg extends Thread {
@@ -320,25 +175,6 @@ public class MainActivity extends AppCompatActivity {
             msg.setData(bundleData);
 
             handler.sendMessage(msg);
-        }
-
-        /**
-         * 获取bilibili下载目录下的文件信息。
-         * 当点击按钮时，清除下方的详情页面。
-         * 并且获取用户输入的avid，拼接出avid对应的目录。
-         *
-         * @param v 当前view
-         */
-        public void getFilesPath(View v) {
-            init();
-            tv_content.setText("");
-            String avid = et_avid.getText().toString().trim();
-            if (TextUtils.isEmpty(avid))
-                avid = "14494920";
-            singlevideo parse = new singlevideo(avid);
-            String temp = parse.parseVideos();
-            //        tv_content.setText(parse.type_tag);
-            tv_content.setText(temp);
         }
     }
 }
